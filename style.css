@@ -192,3 +192,58 @@ color: #5357B6;
     box-sizing: border-box;
     text-align: start;
 }
+.delete-edit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+#delete{
+    
+    font-family: 'Rubik',sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+    color: #ED6368;
+}
+#edit{
+    font-family: 'Rubik',sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+    color: #5357B6;
+
+
+}
+.icon-img{
+    height: 14px;
+    width: 11.666666984558105px;
+    left: 12px;
+    top: 3px;
+    border-radius: 0px;
+   
+
+}
+.you{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 19px;
+    width: 36px;
+    left: 0px;
+    top: 0px;
+    border-radius: 2px;
+    background: #5357B6;
+    font-family: 'Rubik',sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 15px;
+    color: white;
+    
+
+}

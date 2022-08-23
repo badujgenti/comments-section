@@ -3,7 +3,7 @@ import data from "/data.json" assert {type:"json"};
 
 const commentaries = document.getElementById("commentaries");
 const userName = data.currentUser.username;
-console.log(userName);
+
 
 
 function markup(isComment, pic, name, time, text, score,isCurrentUser) {
@@ -14,16 +14,22 @@ function markup(isComment, pic, name, time, text, score,isCurrentUser) {
      <div class="first-line">
     <img class="img" src="${pic}">
     <p class="name">${name}</p>
+    ${isCurrentUser ? "<div class='you'> You </div>": ""}
     <span class="time">${time}</span>
    </div>
-   <p class="text">${text}<p>
+   <p class="text" >${text}<p>
    <div class="footer">
      <div class="score">
      <img class="plus-icon" src="/images/icon-plus.svg">
      <span class="score-num">${score}</span>
      <img class="minus-icon" src="/images/icon-minus.svg">
    </div>
-  ${isCurrentUser ? "delete btn" : `<div class="reply">
+  ${isCurrentUser ? `<div class="delete-edit">
+  <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+<div id="delete"> Delete</div>
+<img class="icon-img" src="/images/icon-edit.svg">
+<div id="edit">Edit</div>
+</div>` : `<div class="reply">
   <img src="/images/icon-reply.svg">
   <span> Reply</span>
 </div>` }
@@ -69,7 +75,99 @@ for (let i = 0; i < data.comments.length; i++){
 }
 
 
+const plusIcon = document.querySelectorAll(".plus-icon");
+
+plusIcon.forEach(e =>  {
+  e.addEventListener("click", (event)=>{
+
+    
+    const valueCount = e.nextElementSibling.innerHTML 
+
+    
+    const addOne = Number(valueCount) + 1 ;
+
+    e.nextElementSibling.innerHTML  = addOne;
+
+  })
+});
+
+const minusIcon = document.querySelectorAll(".minus-icon");
+
+minusIcon.forEach(e =>  {
+  e.addEventListener("click", (event)=>{
+
+    
+    const valueCount = e.previousElementSibling.innerHTML 
+    
+    
+    const minusOne = Number(valueCount) - 1 ;
+
+    e.previousElementSibling.innerHTML  = minusOne;
+
+  })
+});
+
+
+
+const edit_button = document.getElementById("edit");
+const paragraph = document.querySelector(".text");
+
+
+
+edit_button.addEventListener("click", function(event) {
+  const p = event.target.parentElement.parentElement.previousElementSibling.previousElementSibling;
+  const footer = event.target.parentElement.parentElement;
+  const footerParent = footer.parentElement;
+  footer.style.display = "none";
+  const update = document.createElement("button");
+  update.classList.add("update");
+  update.innerHTML = "UPDATE";
+  update.addEventListener("click",updateReply)
+  footerParent.append(update);
+
+  
+  const pText = p.textContent;
+  const textArea = document.createElement("textarea");;
+  textArea.classList.add("edit-area");
+  p.replaceWith(textArea);
+
+
+  
+ 
+} )
+
+function updateReply (event) {
+    const textArea = event.target.previousElementSibling.previousElementSibling.previousElementSibling
+    const p = document.createElement("p");
+    p.classList.add("text");
+    p.innerHTML = textArea.value;
+    textArea.replaceWith(p);
+}
 
 
 
 
+const deleteButton = document.getElementById("delete");
+deleteButton.addEventListener("click", ()=>{
+  
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ const valueCount = document.querySelectorAll(".score-num").innerHTML;
+    
+    const addOne = Number(valueCount) + 1 ;
+    
+    // document.querySelectorAll(".score-num").innerHTML[i] = addOne;
+  
