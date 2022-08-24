@@ -1,6 +1,7 @@
 import data from "/data.json" assert {type:"json"};
 
 
+
 const commentaries = document.getElementById("commentaries");
 const userName = data.currentUser.username;
 
@@ -149,10 +150,52 @@ function updateReply (event) {
 
 const deleteButton = document.getElementById("delete");
 deleteButton.addEventListener("click", ()=>{
-  
+      const parentDiv = deleteButton.parentElement.parentElement.parentElement;
+     
+
+
+      const bgdDiv = document.querySelector(".background");
+      console.log(bgdDiv);
+      bgdDiv.style.display = "flex"
+      const yesDelete = document.querySelector(".yes-delete");
+   
+      yesDelete.addEventListener("click",()=>{
+        console.log(parentDiv);
+        parentDiv.remove();
+
+        yesDelete.parentElement.parentElement.parentElement.style.display = "none";
+
+      })
+
+      const noCancel = document.querySelector(".no-cancel")
+      noCancel.addEventListener("click", ()=>{
+          noCancel.parentElement.parentElement.parentElement.style.display = "none";
+
+      })
 })
 
 
+const replyBtn = document.querySelectorAll(".reply");
+replyBtn.forEach(e =>  {
+  e.addEventListener("click", (event)=>{
+      const replyDiv = document.createElement("div");
+      const commentBox = event.target.parentElement.parentElement.parentElement;
+      commentBox.append(replyDiv);
+      replyDiv.classList.add("reply-div");
+      const replyInput = document.createElement("input")
+      replyInput.classList.add("reply-input");
+      replyDiv.append(replyInput);
+
+      const replyBtn = document.createElement("div");
+      replyBtn.classList.add("reply-btn");
+      replyInput.appendChild(replyBtn);
+
+      
+
+     
+      // replyDiv.style.display = "block"
+  })
+})
 
 
 
