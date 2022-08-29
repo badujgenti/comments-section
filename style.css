@@ -107,7 +107,13 @@ line-height: 24px;
 letter-spacing: 0px;
 text-align: left;
 color: #5357B6;
+
 }
+.reply:hover{
+    color: #C5C6EF;
+    cursor: pointer;
+}
+
 .reply-box{
     width: 90%;
     border-radius: 8px;
@@ -173,6 +179,9 @@ color: #5357B6;
 
 
   }
+  #send:hover{
+    background: #C5C6EF;
+  }
   input{
     
     font-family: 'Rubik',sans-serif;
@@ -208,6 +217,10 @@ color: #5357B6;
     text-align: left;
     color: #ED6368;
 }
+.#delete:hover{
+    background: #C5C6EF;
+    cursor: pointer;
+}
 #edit{
     font-family: 'Rubik',sans-serif;
     font-size: 16px;
@@ -217,6 +230,11 @@ color: #5357B6;
     text-align: left;
     color: #5357B6;
 
+
+}
+#edit:hover{
+    color: #C5C6EF;
+    cursor: pointer;
 
 }
 .icon-img{
@@ -270,10 +288,13 @@ margin-left: auto;
 
 
 }
+.update:hover{
+    background: #C5C6EF;
+}
 .edit-area{
     border: 0px;
-    height: auto;
-    width: auto;
+    height: 96px;
+    width: 100%;
     font-family: 'Rubik',sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -281,6 +302,7 @@ margin-left: auto;
     letter-spacing: 0px;
     text-align: left;
     color: #67727E;
+    cursor: pointer;
 
 }
 .delete-comment{
@@ -363,29 +385,163 @@ color: white;
 } 
 .reply-div{
     height: 144px;
-    width: 730px;
-    left: 355px;
-    top: 239px;
+    background-color: white;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
   
     
 
 }
+.reply-div1{
+    height: 144px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
 .reply-input{
     margin-top: 10px;
     height: 96px;
-width: 311px;
-left: 0px;
-top: 0px;
-border-radius: 8px;
-border: 1px solid #5357B6;
+    width: 275px;
+    left: 0px;
+    top: 0px;
+    border-radius: 8px;
+    border: 1px solid #5357B6;
+    padding: 10px;
+    cursor: pointer;
+
+}
+.reply-input1{
+
+    height: 96px;
+   padding: 10px;
+    border-radius: 8px;
+}
+
+.reply-input:hover{
 
 }
 .reply-btn{
+    
     height: 48px;
     width: 104px;
     border-radius: 8px;
     background: #5357B6;
+    border: none;
+    color: white;
+     font-family: 'Rubik',sans-serif;
+     margin-top: auto;
+     margin-left: auto;
+
 
 
 }
+.reply-btn:hover{
+    background: #C5C6EF;
+    cursor: pointer;
+}
+.plus-icon{
+    cursor: pointer;
+}
+.minus-icon{
+    cursor: pointer;
+}
+@media only screen and (min-width: 1024px){
+    body{
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    }
+    .comment-box{
+        height: 167px;
+        width: 730px;
+        left: 0px;
+        top: 0px;
+        border-radius: 8px;
+        padding: 24px;
+
+    }
+    .comment-box1{
+        height: 144px;
+        width: 642px;
+        left: 443px;
+        top: 765px;
+        border-radius: 8px;
+        
+        
+        padding: 24px;
+
+    }
+    .text{
+        margin: 0px;
+    }
+    .reply-div{
+        height: 167px;
+        width: 730px;
+        left: 0px;
+        top: 0px;
+        border-radius: 8px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 20px;
+
+    }
+    .reply-input{
+        height: 96px;
+        width: 506px;
+        left: 0px;
+        top: 0px;
+        border-radius: 8px;
+
+    }
+    .score{
+
+    }
+    .first-line{
+        justify-content: flex-start;
+        gap: 20px;
+    }
+    .add-comment-box{
+        height: 144px;
+        width: 730px;
+        left: 355px;
+        top: 1232px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .add-comment{
+        height: 96px;
+        width: 506px;
+        left: 0px;
+        top: 0px;
+        border-radius: 8px;
+
+    }
+    .reply-box{
+        height: 283px;
+width: 642px;
+left: 0px;
+top: 0px;
+border-radius: 8px;
+
+    }
+    .vl{
+        margin-left: 43px;
+        margin-right: 43px;
+    }
+    .reply-div1{
+        display: flex;
+        padding: 20px;
+        border-radius: 8px;
+        background: white;
+        
+    }
+
+}
+    

@@ -2,12 +2,12 @@ import data from "/data.json" assert {type:"json"};
 
 
 
-const commentaries = document.getElementById("commentaries");
+let commentaries = document.getElementById("commentaries");
 const userName = data.currentUser.username;
 
 
 
-function markup(isComment, pic, name, time, text, score,isCurrentUser) {
+function markup(isComment, pic, name, time, text, score,isCurrentUser,className) {
     return` 
     ${isComment ? "" : "<div class='hr-and-reply' >"}
     ${isComment ? "" : "<div class='vl'> </div>"}
@@ -21,16 +21,16 @@ function markup(isComment, pic, name, time, text, score,isCurrentUser) {
    <p class="text" >${text}<p>
    <div class="footer">
      <div class="score">
-     <img class="plus-icon" src="/images/icon-plus.svg">
+     <img  onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
      <span class="score-num">${score}</span>
-     <img class="minus-icon" src="/images/icon-minus.svg">
+     <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
    </div>
   ${isCurrentUser ? `<div class="delete-edit">
   <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
-<div id="delete"> Delete</div>
+<div onclick ="deleteCom(this)" id="delete"> Delete</div>
 <img class="icon-img" src="/images/icon-edit.svg">
-<div id="edit">Edit</div>
-</div>` : `<div class="reply">
+<div onclick="editCom (event)"id="edit">Edit</div>
+</div>` : `<div  class="${className}">
   <img src="/images/icon-reply.svg">
   <span> Reply</span>
 </div>` }
@@ -56,7 +56,7 @@ for (let i = 0; i < data.comments.length; i++){
     const text = data.comments[i].content;
     const isCurrentUser = name === userName;
     
-    commentaries.innerHTML += markup(true, pic, name, time, text, score, isCurrentUser);
+    commentaries.innerHTML += markup(true, pic, name, time, text, score, isCurrentUser,"reply reply1");
 
     const replies = data.comments[i].replies
    
@@ -68,7 +68,8 @@ for (let i = 0; i < data.comments.length; i++){
       const text = replies[i].content;
       const isCurrentUserReply = name === userName;
       
-      commentaries.innerHTML+= markup(false, pic, name, time, text, score, isCurrentUserReply);
+      
+      commentaries.innerHTML+= markup(false, pic, name, time, text, score, isCurrentUserReply,"reply reply2");
     
   }
 
@@ -76,125 +77,212 @@ for (let i = 0; i < data.comments.length; i++){
 }
 
 
-const plusIcon = document.querySelectorAll(".plus-icon");
 
-plusIcon.forEach(e =>  {
-  e.addEventListener("click", (event)=>{
 
+
+// const edit_button = document.getElementById("edit");
+// const paragraph = document.querySelector(".text");
+
+// edit_button.addEventListener("click", function(event) {
+//   const p = event.target.parentElement.parentElement.previousElementSibling.previousElementSibling;
+//   const footer = event.target.parentElement.parentElement;
+//   const footerParent = footer.parentElement;
+//   footer.style.display = "none";
+//   const update = document.createElement("button");
+//   update.classList.add("update");
+//   update.innerHTML = "UPDATE";
+//   update.addEventListener("click",updateReply)
+//   footerParent.append(update);
+
+  
+//   const pText = p.textContent;
+//   const textArea = document.createElement("textarea");;
+//   textArea.classList.add("edit-area");
+//   p.replaceWith(textArea);
+
+
+  
+ 
+// } )
+
+function updateReply (event) {
+    const textArea = event.target.previousElementSibling.previousElementSibling.previousElementSibling;
+    const p = document.createElement("p");
+    p.classList.add("text");
+    p.innerHTML = textArea.value;
+    textArea.replaceWith(p);
+    const footer = document.createElement("div")
+    footer.classList.add("footer");
     
-    const valueCount = e.nextElementSibling.innerHTML 
+    const footerTemplate = `  
+    <div class="score">
+    <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+    <span class="score-num">0</span>
+    <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+  </div>
+ <div  class="delete-edit">
+ <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+ <div onclick ="deleteCom(this)" id="delete"> Delete</div>
+ <img class="icon-img" src="/images/icon-edit.svg">
+ <div onclick="editCom(event)" id="edit">Edit</div>
+ </div>
+ `
+footer.innerHTML = footerTemplate;
 
+event.target.replaceWith(footer);
+
+}
+
+window.editCom = (element)=>{
+  
+  let commentBox ;
+  if (element.target.parentElement.closest(".comment-box") ) {
+    commentBox = element.target.parentElement.closest(".comment-box");
     
-    const addOne = Number(valueCount) + 1 ;
-
-    e.nextElementSibling.innerHTML  = addOne;
-
-  })
-});
-
-const minusIcon = document.querySelectorAll(".minus-icon");
-
-minusIcon.forEach(e =>  {
-  e.addEventListener("click", (event)=>{
-
+  }else{
+    commentBox =  element.target.parentElement.closest(".reply-box");
+    console.log(commentBox);
     
-    const valueCount = e.previousElementSibling.innerHTML 
-    
-    
-    const minusOne = Number(valueCount) - 1 ;
+  }
+  const p = commentBox.querySelector(".text");
 
-    e.previousElementSibling.innerHTML  = minusOne;
-
-  })
-});
-
-
-
-const edit_button = document.getElementById("edit");
-const paragraph = document.querySelector(".text");
-
-
-
-edit_button.addEventListener("click", function(event) {
-  const p = event.target.parentElement.parentElement.previousElementSibling.previousElementSibling;
-  const footer = event.target.parentElement.parentElement;
+  const footer = element.target.parentElement.parentElement;
   const footerParent = footer.parentElement;
   footer.style.display = "none";
   const update = document.createElement("button");
   update.classList.add("update");
   update.innerHTML = "UPDATE";
+
+
   update.addEventListener("click",updateReply)
   footerParent.append(update);
+  
 
   
   const pText = p.textContent;
-  const textArea = document.createElement("textarea");;
+  const textArea = document.createElement("textarea");
   textArea.classList.add("edit-area");
+  
+  textArea.value = p.textContent;
   p.replaceWith(textArea);
 
 
-  
- 
-} )
 
-function updateReply (event) {
-    const textArea = event.target.previousElementSibling.previousElementSibling.previousElementSibling
-    const p = document.createElement("p");
-    p.classList.add("text");
-    p.innerHTML = textArea.value;
-    textArea.replaceWith(p);
+
+  
 }
 
 
 
-
-const deleteButton = document.getElementById("delete");
-deleteButton.addEventListener("click", ()=>{
-      const parentDiv = deleteButton.parentElement.parentElement.parentElement;
-     
-
-
-      const bgdDiv = document.querySelector(".background");
-      console.log(bgdDiv);
-      bgdDiv.style.display = "flex"
-      const yesDelete = document.querySelector(".yes-delete");
-   
-      yesDelete.addEventListener("click",()=>{
-        console.log(parentDiv);
-        parentDiv.remove();
-
-        yesDelete.parentElement.parentElement.parentElement.style.display = "none";
-
-      })
-
-      const noCancel = document.querySelector(".no-cancel")
-      noCancel.addEventListener("click", ()=>{
-          noCancel.parentElement.parentElement.parentElement.style.display = "none";
-
-      })
-})
-
-
-const replyBtn = document.querySelectorAll(".reply");
+const replyBtn = document.querySelectorAll(".reply1");
 replyBtn.forEach(e =>  {
   e.addEventListener("click", (event)=>{
-      const replyDiv = document.createElement("div");
-      const commentBox = event.target.parentElement.parentElement.parentElement;
-      commentBox.append(replyDiv);
+
+      
+      
+      let commentBox ;
+      if (event.target.parentElement.closest(".comment-box") ) {
+        commentBox = event.target.parentElement.closest(".comment-box");
+        
+      }else{
+       commentBox =  event.target.parentElement.closest(".reply-box");
+        console.log(commentBox);
+
+      }
+     
+      let replyDiv  = document.createElement("div");
+      commentaries.insertBefore(replyDiv , commentBox.nextElementSibling);
       replyDiv.classList.add("reply-div");
-      const replyInput = document.createElement("input")
+
+   
+
+      const replyInput = document.createElement("textarea")
       replyInput.classList.add("reply-input");
       replyDiv.append(replyInput);
 
-      const replyBtn = document.createElement("div");
+      const replyBtn = document.createElement("button");
       replyBtn.classList.add("reply-btn");
-      replyInput.appendChild(replyBtn);
+      replyDiv.appendChild(replyBtn);
+      replyBtn.textContent = "REPLY"
 
       
-
+    replyBtn.addEventListener("click", ()=>{
+      const replyText = document.createElement("p");
+      replyText.classList.add("text")
+      replyText.textContent = replyInput.value ;
      
-      // replyDiv.style.display = "block"
+
+      const commentBoxContent = document.createElement("div")
+      replyDiv.replaceWith(commentBoxContent);
+ 
+      commentBoxContent.classList.add("comment-box")
+  const commentBox = `  
+  <div class="first-line">
+    <img class="img" src="${data.currentUser.image.png}">
+    <p class="name">${data.currentUser.username}</p>
+   <div class='you'> You </div>
+    <span class="time">Now</span>
+   </div>
+   <p class="text" >${replyInput.value}<p>
+   <div class="footer">
+     <div class="score">
+     <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+     <span class="score-num">0</span>
+     <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+   </div>
+  <div  class="delete-edit">
+  <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+  <div onclick ="deleteCom(this)" id="delete"> Delete</div>
+  <img class="icon-img" src="/images/icon-edit.svg">
+  <div onclick="editCom(event)" id="edit">Edit</div>
+  </div>
+  </div>
+  
+`
+commentBoxContent.innerHTML = commentBox;
+
+    })
+    
+      
+
   })
+})
+
+const addComment = document.getElementById("send");
+addComment.addEventListener("click", ()=>{
+  const commentText = document.querySelector(".add-comment");
+  
+  const commentBoxContent = document.createElement("div")
+  commentBoxContent.classList.add("comment-box")
+  const commentBox = `  
+  <div class="first-line">
+    <img class="img" src="${data.currentUser.image.png}">
+    <p class="name">${data.currentUser.username}</p>
+   <div class='you'> You </div>
+    <span class="time">Now</span>
+   </div>
+   <p class="text" >${commentText.value}<p>
+   <div class="footer">
+     <div class="score">
+     <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+     <span class="score-num">0</span>
+     <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+   </div>
+  <div  class="delete-edit">
+  <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+  <div onclick ="deleteCom(this)" id="delete"> Delete</div>
+  <img class="icon-img" src="/images/icon-edit.svg">
+  <div onclick="editCom(event)" id="edit">Edit</div>
+  </div>
+  </div>
+  
+`
+commentBoxContent.innerHTML = commentBox;
+
+commentaries.append(commentBoxContent);
+commentText.value= "";
+
+
 })
 
 
@@ -202,15 +290,128 @@ replyBtn.forEach(e =>  {
 
 
 
+window.plus = (e)=>{
 
-
-
-
-
-
- const valueCount = document.querySelectorAll(".score-num").innerHTML;
+ 
     
-    const addOne = Number(valueCount) + 1 ;
-    
-    // document.querySelectorAll(".score-num").innerHTML[i] = addOne;
+  const valueCount = e.nextElementSibling.innerHTML 
+
   
+  const addOne = Number(valueCount) + 1 ;
+
+  e.nextElementSibling.innerHTML  = addOne;
+
+}
+
+
+
+window.minus = (e) =>{
+  
+  const valueCount = e.previousElementSibling.innerHTML 
+    
+    
+  const minusOne = Number(valueCount) - 1 ;
+
+  e.previousElementSibling.innerHTML  = minusOne;
+}
+
+
+
+window.deleteCom = (element)=>{
+  
+  const parentDiv = element.parentElement.parentElement.parentElement;
+  console.log(parentDiv);
+ 
+     
+  const bgdDiv = document.querySelector(".background");
+  console.log(bgdDiv);
+  bgdDiv.style.display = "flex"
+  const yesDelete = document.querySelector(".yes-delete");
+
+  yesDelete.addEventListener("click",()=>{
+    console.log(parentDiv);
+    parentDiv.remove();
+
+    yesDelete.parentElement.parentElement.parentElement.style.display = "none";
+
+  })
+
+  const noCancel = document.querySelector(".no-cancel")
+  noCancel.addEventListener("click", ()=>{
+      noCancel.parentElement.parentElement.parentElement.style.display = "none";
+
+  })
+}
+
+
+const replyBtn1 = document.querySelectorAll(".reply2");
+replyBtn1.forEach(e =>  {
+  e.addEventListener("click", (event)=>{
+         
+    let commentBox ;
+    if (event.target.parentElement.closest(".comment-box") ) {
+      commentBox = event.target.parentElement.closest(".comment-box");
+      
+    }else{
+     commentBox =  event.target.parentElement.closest(".reply-box");
+      console.log(commentBox);
+
+    }
+
+    let replyBox = document.querySelector(".reply-box");
+   
+    let replyDiv  = document.createElement("div");
+    replyBox.append(replyDiv );
+    replyDiv.classList.add("reply-div1");
+
+ 
+
+    const replyInput = document.createElement("textarea")
+    replyInput.classList.add("reply-input1");
+    replyDiv.append(replyInput);
+
+    const replyBtn = document.createElement("button");
+    replyBtn.classList.add("reply-btn");
+    replyDiv.appendChild(replyBtn);
+    replyBtn.textContent = "REPLY"
+
+    
+  replyBtn.addEventListener("click", ()=>{
+    const replyText = document.createElement("p");
+    replyText.classList.add("text")
+    replyText.textContent = replyInput.value ;
+   
+
+    const commentBoxContent = document.createElement("div")
+    replyDiv.replaceWith(commentBoxContent);
+
+    commentBoxContent.classList.add("comment-box1")
+const commentBox = `  
+<div class="first-line">
+  <img class="img" src="${data.currentUser.image.png}">
+  <p class="name">${data.currentUser.username}</p>
+ <div class='you'> You </div>
+  <span class="time">Now</span>
+ </div>
+ <p class="text" >${replyInput.value}<p>
+ <div class="footer">
+   <div class="score">
+   <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+   <span class="score-num">0</span>
+   <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+ </div>
+<div  class="delete-edit">
+<img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+<div onclick ="deleteCom(this)" id="delete"> Delete</div>
+<img class="icon-img" src="/images/icon-edit.svg">
+<div onclick="editCom(event)" id="edit">Edit</div>
+</div>
+</div>
+
+`
+commentBoxContent.innerHTML = commentBox;
+
+  })
+
+  })
+})
