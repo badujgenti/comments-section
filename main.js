@@ -80,37 +80,22 @@ for (let i = 0; i < data.comments.length; i++){
 
 
 
-// const edit_button = document.getElementById("edit");
-// const paragraph = document.querySelector(".text");
-
-// edit_button.addEventListener("click", function(event) {
-//   const p = event.target.parentElement.parentElement.previousElementSibling.previousElementSibling;
-//   const footer = event.target.parentElement.parentElement;
-//   const footerParent = footer.parentElement;
-//   footer.style.display = "none";
-//   const update = document.createElement("button");
-//   update.classList.add("update");
-//   update.innerHTML = "UPDATE";
-//   update.addEventListener("click",updateReply)
-//   footerParent.append(update);
-
-  
-//   const pText = p.textContent;
-//   const textArea = document.createElement("textarea");;
-//   textArea.classList.add("edit-area");
-//   p.replaceWith(textArea);
-
 
   
  
-// } )
 
 function updateReply (event) {
-    const textArea = event.target.previousElementSibling.previousElementSibling.previousElementSibling;
+    const textArea = event.target.parentElement.querySelector("textarea");
+    console.log(textArea);
     const p = document.createElement("p");
     p.classList.add("text");
     p.innerHTML = textArea.value;
     textArea.replaceWith(p);
+   
+    
+
+
+
     const footer = document.createElement("div")
     footer.classList.add("footer");
     
@@ -133,20 +118,20 @@ event.target.replaceWith(footer);
 
 }
 
-window.editCom = (element)=>{
-  
+window.editCom = (event)=>{
+  const editArea = event.target.parentElement.parentElement.parentElement.querySelector(".edit-area");
   let commentBox ;
-  if (element.target.parentElement.closest(".comment-box") ) {
-    commentBox = element.target.parentElement.closest(".comment-box");
+  if (event.target.parentElement.closest(".comment-box") ) {
+    commentBox = event.target.parentElement.closest(".comment-box");
     
   }else{
-    commentBox =  element.target.parentElement.closest(".reply-box");
-    console.log(commentBox);
+    commentBox =  event.target.parentElement.closest(".reply-box");
+    
     
   }
   const p = commentBox.querySelector(".text");
 
-  const footer = element.target.parentElement.parentElement;
+  const footer = event.target.parentElement.parentElement;
   const footerParent = footer.parentElement;
   footer.style.display = "none";
   const update = document.createElement("button");
@@ -160,11 +145,15 @@ window.editCom = (element)=>{
 
   
   const pText = p.textContent;
-  const textArea = document.createElement("textarea");
-  textArea.classList.add("edit-area");
   
-  textArea.value = p.textContent;
-  p.replaceWith(textArea);
+    const textArea = document.createElement("textarea");
+    textArea.classList.add("edit-area");
+    textArea.value = p.textContent;
+    p.replaceWith(textArea);
+    
+ 
+ 
+  
 
 
 
@@ -199,6 +188,14 @@ replyBtn.forEach(e =>  {
       const replyInput = document.createElement("textarea")
       replyInput.classList.add("reply-input");
       replyDiv.append(replyInput);
+
+
+      // const manPic = document.createElement("img")
+    // manPic.classList.add("img");
+    // manPic.src = "/images/avatars/image-juliusomo.png";
+    // replyDiv.append(manPic);
+
+
 
       const replyBtn = document.createElement("button");
       replyBtn.classList.add("reply-btn");
@@ -348,27 +345,34 @@ const replyBtn1 = document.querySelectorAll(".reply2");
 replyBtn1.forEach(e =>  {
   e.addEventListener("click", (event)=>{
          
-    let commentBox ;
-    if (event.target.parentElement.closest(".comment-box") ) {
-      commentBox = event.target.parentElement.closest(".comment-box");
+    // let commentBox ;
+    // if (event.target.parentElement.closest(".comment-box") ) {
+    //   commentBox = event.target.parentElement.closest(".comment-box");
       
-    }else{
-     commentBox =  event.target.parentElement.closest(".reply-box");
-      console.log(commentBox);
+    // }else{
+    //  commentBox =  event.target.parentElement.closest(".reply-box");
+    //   console.log(commentBox);
 
-    }
+    // }
 
     let replyBox = document.querySelector(".reply-box");
    
     let replyDiv  = document.createElement("div");
-    replyBox.append(replyDiv );
+    // replyBox.append (replyDiv );
+    
+    commentaries.insertBefore(replyDiv , replyBox.parentElement.nextElementSibling);
+    // replyBox.insertAdjacentElement ("afterend",replyDiv);
     replyDiv.classList.add("reply-div1");
 
- 
 
     const replyInput = document.createElement("textarea")
     replyInput.classList.add("reply-input1");
     replyDiv.append(replyInput);
+
+    // const manPic = document.createElement("img")
+    // manPic.classList.add("img");
+    // manPic.src = "/images/avatars/image-juliusomo.png";
+    // replyDiv.append(manPic);
 
     const replyBtn = document.createElement("button");
     replyBtn.classList.add("reply-btn");
