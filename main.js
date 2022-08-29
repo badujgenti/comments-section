@@ -21,17 +21,17 @@ function markup(isComment, pic, name, time, text, score,isCurrentUser,className)
    <p class="text" >${text}<p>
    <div class="footer">
      <div class="score">
-     <img  onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+     <img  onclick="plus(this)" class="plus-icon" src="./images/icon-plus.svg">
      <span class="score-num">${score}</span>
-     <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+     <img onclick="minus(this)" class="minus-icon" src="./images/icon-minus.svg">
    </div>
   ${isCurrentUser ? `<div class="delete-edit">
-  <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+  <img class="icon-img" src="./images/icon-delete.svg" alt="del btn">
 <div onclick ="deleteCom(this)" id="delete"> Delete</div>
-<img class="icon-img" src="/images/icon-edit.svg">
+<img class="icon-img" src="./images/icon-edit.svg">
 <div onclick="editCom (event)"id="edit">Edit</div>
 </div>` : `<div  class="${className}">
-  <img src="/images/icon-reply.svg">
+  <img src="./images/icon-reply.svg">
   <span> Reply</span>
 </div>` }
   
@@ -101,14 +101,14 @@ function updateReply (event) {
     
     const footerTemplate = `  
     <div class="score">
-    <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+    <img onclick="plus(this)" class="plus-icon" src="./images/icon-plus.svg">
     <span class="score-num">0</span>
-    <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+    <img onclick="minus(this)" class="minus-icon" src="./images/icon-minus.svg">
   </div>
  <div  class="delete-edit">
- <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+ <img class="icon-img" src="./images/icon-delete.svg" alt="del btn">
  <div onclick ="deleteCom(this)" id="delete"> Delete</div>
- <img class="icon-img" src="/images/icon-edit.svg">
+ <img class="icon-img" src="./images/icon-edit.svg">
  <div onclick="editCom(event)" id="edit">Edit</div>
  </div>
  `
@@ -223,14 +223,14 @@ replyBtn.forEach(e =>  {
    <p class="text" >${replyInput.value}<p>
    <div class="footer">
      <div class="score">
-     <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+     <img onclick="plus(this)" class="plus-icon" src="./images/icon-plus.svg">
      <span class="score-num">0</span>
-     <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+     <img onclick="minus(this)" class="minus-icon" src="./images/icon-minus.svg">
    </div>
   <div  class="delete-edit">
-  <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+  <img class="icon-img" src="./images/icon-delete.svg" alt="del btn">
   <div onclick ="deleteCom(this)" id="delete"> Delete</div>
-  <img class="icon-img" src="/images/icon-edit.svg">
+  <img class="icon-img" src="./images/icon-edit.svg">
   <div onclick="editCom(event)" id="edit">Edit</div>
   </div>
   </div>
@@ -261,14 +261,14 @@ addComment.addEventListener("click", ()=>{
    <p class="text" >${commentText.value}<p>
    <div class="footer">
      <div class="score">
-     <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+     <img onclick="plus(this)" class="plus-icon" src="./images/icon-plus.svg">
      <span class="score-num">0</span>
-     <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+     <img onclick="minus(this)" class="minus-icon" src="./images/icon-minus.svg">
    </div>
   <div  class="delete-edit">
-  <img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+  <img class="icon-img" src="./images/icon-delete.svg" alt="del btn">
   <div onclick ="deleteCom(this)" id="delete"> Delete</div>
-  <img class="icon-img" src="/images/icon-edit.svg">
+  <img class="icon-img" src="./images/icon-edit.svg">
   <div onclick="editCom(event)" id="edit">Edit</div>
   </div>
   </div>
@@ -400,14 +400,14 @@ const commentBox = `
  <p class="text" >${replyInput.value}<p>
  <div class="footer">
    <div class="score">
-   <img onclick="plus(this)" class="plus-icon" src="/images/icon-plus.svg">
+   <img onclick="plus(this)" class="plus-icon" src="./images/icon-plus.svg">
    <span class="score-num">0</span>
-   <img onclick="minus(this)" class="minus-icon" src="/images/icon-minus.svg">
+   <img onclick="minus(this)" class="minus-icon" src="./images/icon-minus.svg">
  </div>
 <div  class="delete-edit">
-<img class="icon-img" src="/images/icon-delete.svg" alt="del btn">
+<img class="icon-img" src="./images/icon-delete.svg" alt="del btn">
 <div onclick ="deleteCom(this)" id="delete"> Delete</div>
-<img class="icon-img" src="/images/icon-edit.svg">
+<img class="icon-img" src="./images/icon-edit.svg">
 <div onclick="editCom(event)" id="edit">Edit</div>
 </div>
 </div>
